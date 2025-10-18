@@ -4,61 +4,48 @@ import java.util.Scanner;
 import java.util.Random;
 
 
-public class rockPaperScissors {
+public class rockPaperScissors{
     public static void main(String[] args){
-        Scanner scan = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         Random random = new Random();
 
-        System.out.print("Enter you move (rock, paper, scissors): ");
-        // userInput
-        String userInput = scan.nextLine();
-
-        String[] choices = {"paper", "scissors", "rock"};
-        // computerChoice
+        String userChoice;
+        String[] choices = {"rock", "paper", "scissors"};
         String computerChoice = choices[random.nextInt(choices.length)];
-        System.out.print("Computer choice: " + computerChoice);
-        System.out.println();
-
-        // if else
-        if(computerChoice.equals(userInput)) {
-            System.out.println("-----");
-            System.out.println("DRAW!");
-            System.out.println("-----");
-        }
-        else if (userInput.equals("paper") && computerChoice.equals("scissors")){
-            System.out.println("-----");
-            System.out.println("LOSE");
-            System.out.println("-----");
-        }
-        else if (userInput.equals("paper") && computerChoice.equals("rock")){
-            System.out.println("-----");
-            System.out.println("WIN");
-            System.out.println("-----");
-        }
-        else if (userInput.equals("scissors") && computerChoice.equals("paper")) {
-            System.out.println("-----");
-            System.out.println("WIN");
-            System.out.println("-----");
-        }
-        else if (userInput.equals("scissors") && computerChoice.equals("rock")) {
-            System.out.println("-----");
-            System.out.println("LOSE");
-            System.out.println("-----");
-        }
-        else if (userInput.equals("rock") && computerChoice.equals("scissors")) {
-            System.out.println("-----");
-            System.out.println("LOSE");
-            System.out.println("-----");
-        }
-        else if(userInput.equals("rock") && computerChoice.equals("paper")) {
-            System.out.println("-----");
-            System.out.println("WIN");
-            System.out.println("-----");
-        }
+        String playAgain = "yes";
 
 
 
-        scan.close();
+        do {
+            System.out.print("Choose one of the choice (rock, paper, scissors): ");
+            userChoice = input.nextLine().toLowerCase().trim();
+            System.out.println("Computer choice: " + computerChoice);
+
+
+            if (!userChoice.equals("rock") && !userChoice.equals("scissors") && !userChoice.equals("paper")) {
+                System.out.println("Invalid choice!");
+                continue;
+            }
+
+            if (userChoice.equals(computerChoice)) {
+                System.out.println("DRAW!");
+            } else if (userChoice.equals("rock") && computerChoice.equals("scissors") ||
+                    userChoice.equals("paper") && computerChoice.equals("paper") ||
+                    userChoice.equals("scissors") && computerChoice.equals("paper")) {
+                System.out.println("WON!");
+            } else {
+                System.out.println("LOSE!");
+            }
+
+            System.out.print("You wanna keep play? (yes/no): ");
+            playAgain = input.nextLine().toLowerCase().trim();
+
+
+        } while(playAgain.equals("yes"));
+        input.close();
+
+
+
     }
-
 }
+
