@@ -12,6 +12,7 @@ public class slotMachine {
         int bet;
         int payout;
         String[] row;
+        String playAgain;
 
 
         // displaying welcome message
@@ -25,7 +26,7 @@ public class slotMachine {
             // Enter bet amount
             System.out.print("Place your bet amount: ");
             bet = scan.nextInt();
-
+            scan.nextLine();
             //  verify if bet > balance
             if( bet > balance) {
                 System.out.println("INSUFFICIENT FUNDS");
@@ -54,37 +55,42 @@ public class slotMachine {
             if(payout > 0) {
                 System.out.println("You won $" + payout);
             }
+            else {
+                System.out.println("Sorry, you lost this round");
+            }
+
+            // you want to play again?
+            System.out.print("Do you want to play again?: ");
+            playAgain = scan.nextLine();
+            if(playAgain.equals("yes")){
+                continue;
+            }
+            else break;
+
         }
 
+        System.out.println("GAME OVER!");
 
-
-
-        // get payout
-        // wanna play again?
-        // displaying exit message
-
+        scan.close();
     }
 
     //Spin row
     static String[] spinRow() {
-
         String[] symbols = {"🍒", "🍉", "🍋", "🔔", "⭐"};
         String[] row = new String[3];
         Random random = new Random();
 
-
-
-        for( int i = 0 ; i < 3; i++) {
+        for(int i = 0; i < 3 ; i++){
             row[i] = symbols[random.nextInt(symbols.length)];
         }
 
         return row;
     }
 
-    // print row
     static void printRow(String[] row) {
-        System.out.println(" " + String.join(" | ", row));
+        System.out.println(" " + String.join("|", row));
     }
+
 
     // get payout
     static int getPayout(String[] row, int bet) {
@@ -97,6 +103,17 @@ public class slotMachine {
                  case "🔔" -> bet * 10;
                  case "⭐" -> bet * 20;
                  default -> 0;
+            };
+        }
+
+        else if(row[0].equals(row[1]) || row[1].equals(row[2])){
+            return switch(row[1]) {
+                case "🍒" -> bet * 2;
+                case "🍉" -> bet * 3;
+                case "🍋" -> bet * 4;
+                case "🔔" -> bet * 5;
+                case "⭐" -> bet * 10;
+                default -> 0;
             };
         }
 
